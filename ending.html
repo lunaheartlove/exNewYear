@@ -6,6 +6,7 @@
     <title>Happy New Year</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
@@ -27,34 +28,43 @@
             justify-content: center;
             align-items: center;
             color: #5a3a6e;
-            overflow: hidden;
         }
 
-        /* ===== Phone Shell ===== */
-        .phone-shell {
+        /* ===== Phone ===== */
+        .phone {
             width: 380px;
             height: 700px;
             border-radius: 36px;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(12px);
-        }
-
-        /* ===== Phone Layout ===== */
-        .phone {
-            width: 100%;
-            height: 100%;
-            padding: 22px 18px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 24px 18px;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* ===== Header (TOP) ===== */
+        /* ===== Overlay Image ===== */
+        .overlay-img {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            pointer-events: none;
+            opacity: 0.35;
+        }
+
+        .phone>*:not(.overlay-img) {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Header ===== */
         .header {
             text-align: center;
-            padding-bottom: 12px;
-            flex-shrink: 0;
+            margin-bottom: 12px;
         }
 
         .header h2 {
@@ -68,73 +78,22 @@
             margin-top: 4px;
         }
 
-        /* ===== Content (SCROLL AREA) ===== */
-        .content {
+        /* ===== Message Box ===== */
+        .message-box {
             flex: 1;
-            min-height: 0;
-            /* ⭐ สำคัญมาก */
-            display: flex;
-        }
-
-        .typing-box {
-            width: 100%;
-            height: 100%;
             background: rgba(255, 255, 255, 0.85);
             border-radius: 22px;
             padding: 20px 18px;
             font-size: 15px;
             line-height: 1.8;
-            white-space: pre-wrap;
-            overflow-y: auto;
-            position: relative;
             box-shadow: 0 10px 24px rgba(255, 175, 204, 0.35);
+            overflow-y: auto;
+            white-space: pre-wrap;
         }
 
-        /* caret */
-        .typing-box::after {
-            content: "";
-            width: 6px;
-            height: 18px;
-            background: #FFAFCC;
-            position: absolute;
-            right: 16px;
-            bottom: 16px;
-            border-radius: 999px;
-            animation: caret 0.9s infinite;
-        }
-
-        @keyframes caret {
-
-            0%,
-            50% {
-                opacity: 1;
-            }
-
-            50.01%,
-            100% {
-                opacity: 0;
-            }
-        }
-
-        /* ===== Scrollbar ===== */
-        .typing-box::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .typing-box::-webkit-scrollbar-thumb {
-            background: rgba(255, 175, 204, 0.55);
-            border-radius: 999px;
-        }
-
-        .typing-box {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255, 175, 204, 0.55) transparent;
-        }
-
-        /* ===== Footer (BOTTOM) ===== */
+        /* ===== Footer ===== */
         .footer {
-            padding-top: 14px;
-            flex-shrink: 0;
+            margin-top: 14px;
         }
 
         .next-btn {
@@ -144,15 +103,17 @@
             border-radius: 999px;
             text-align: center;
             text-decoration: none;
+
             font-family: 'Mali', cursive;
             font-size: 14px;
             font-weight: 600;
+
             color: #5a3a6e;
             background: linear-gradient(135deg,
                     #FFAFCC,
                     #FFC8DD,
                     #BDE0FE);
-            opacity: 0.5;
+            opacity: 0.4;
             pointer-events: none;
             transition: 0.3s;
         }
@@ -166,87 +127,84 @@
             transform: translateY(-2px);
         }
 
-        /* ===== ≤ 360px (มือถือจอเล็กมาก) ===== */
+        /* ===== Scrollbar ===== */
+        .message-box::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .message-box::-webkit-scrollbar-thumb {
+            background: rgba(255, 175, 204, 0.45);
+            border-radius: 999px;
+        }
+
+        .message-box {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 175, 204, 0.45) transparent;
+        }
+ 
         @media (max-width: 360px) {
-            .phone-shell {
-                width: calc(100vw - 24px);
-                height: auto;
-                aspect-ratio: 380 / 700;
+            body {
+                overflow: hidden;
             }
 
-            .typing-box {
-                font-size: 14px;
-                padding: 16px 14px;
-            }
-
-            .header h2 {
-                font-size: 16px;
-            }
-
-            .header p {
-                font-size: 12px;
+            .phone {
+                transform: scale(0.88);
+                transform-origin: center center;
             }
         }
 
-        /* ===== 361px – 480px (มือถือทั่วไป / iPhone X–16 Pro) ===== */
-        @media (min-width: 361px) and (max-width: 480px) {
-            .phone-shell {
-                width: calc(100vw - 32px);
-                height: auto;
-                aspect-ratio: 380 / 700;
+        @media (min-width: 361px) and (max-width: 430px) {
+            body {
+                overflow: hidden;
+            }
+
+            .phone {
+                transform: scale(0.95);
+                transform-origin: center center;
             }
         }
 
-        /* ===== Fix ขอบซ้ายขวา iPhone X → 16 Pro ===== */
-        @media (max-width: 430px) {
-            .phone-shell {
-                max-width: calc(100vw - 32px);
+        @media (min-width: 431px) and (max-width: 480px) {
+            body {
+                overflow: hidden;
+            }
+
+            .phone {
+                transform: scale(0.97);
+                transform-origin: center center;
             }
         }
 
-        /* ===== 481px – 599px (มือถือใหญ่ / tablet เล็ก) ===== */
         @media (min-width: 481px) and (max-width: 599px) {
-            .phone-shell {
-                transform: scale(1.03);
-            }
-
-            .typing-box {
-                font-size: 15.5px;
+            .phone {
+                transform: scale(1);
             }
         }
 
-        /* ===== 600px – 1024px (Tablet / iPad) ===== */
         @media (min-width: 600px) and (max-width: 1024px) {
             body {
                 padding: 32px;
             }
 
-            .phone-shell {
+            .phone {
                 transform: scale(1.08);
-            }
-
-            .typing-box {
-                font-size: 16px;
+                transform-origin: center center;
             }
         }
 
-        /* ===== Landscape มือถือ (แนวนอน) ===== */
         @media (orientation: landscape) and (max-height: 420px) {
             body {
                 align-items: flex-start;
                 padding-top: 12px;
+                overflow: hidden;
             }
 
-            .phone-shell {
+            .phone {
                 transform: scale(0.82);
-            }
-
-            .header {
-                padding-bottom: 8px;
+                transform-origin: top center;
             }
         }
 
-        /* ===== Reduce Motion (Accessibility) ===== */
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation: none !important;
@@ -254,7 +212,6 @@
             }
         }
 
-        /* ===== Safe Area (Notch / Gesture Edge – iOS) ===== */
         @supports (padding: env(safe-area-inset-left)) {
             body {
                 padding-left: env(safe-area-inset-left);
@@ -266,58 +223,57 @@
 
 <body>
 
-    <div class="phone-shell">
-        <div class="phone">
+    <div class="phone">
 
-            <!-- TOP -->
-            <div class="header">
-                <h2>ข้อความปิดท้ายปีนี้</h2>
-                <p>จากใจเค้าถึงเธอ</p>
-            </div>
+        <img src="img/back.png" class="overlay-img" alt="">
 
-            <!-- SCROLLABLE CONTENT -->
-            <div class="content">
-                <div class="typing-box" id="typing"></div>
-            </div>
-
-            <!-- BOTTOM -->
-            <div class="footer">
-                <a href="index.html" class="next-btn" id="backBtn">
-                    กลับไปหน้าแรก
-                </a>
-            </div>
-
+        <!-- Header -->
+        <div class="header">
+            <h2>ข้อความปิดท้ายปีนี้</h2>
+            <p>จากใจเค้า ถึงเธอ</p>
         </div>
+
+        <!-- Message -->
+        <div class="message-box" id="message"></div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <a href="index.html" class="next-btn" id="backBtn">
+                กลับไปหน้าแรก
+            </a>
+        </div>
+
     </div>
 
     <script>
-        const text = `ปีที่แล้วอาจไม่ง่ายเสมอไป  
-มีทั้งวันที่ดี  
-และวันที่เหนื่อยกว่าที่คิด  
+        const text = `ปีที่แล้วอาจไม่ง่ายเสมอไป
+มีทั้งวันที่ดี และวันที่เหนื่อยกว่าที่คิด
 
-แต่ทุกช่วงเวลาที่ผ่านมา  
-สิ่งหนึ่งที่ชัดเจนสำหรับเค้ามาก  
-คือการมีเธออยู่ตรงนั้น  
+แต่ทุกช่วงเวลาที่ผ่านมา
+สิ่งหนึ่งที่ชัดเจนสำหรับเค้ามาก
+คือการมีเธออยู่ตรงนั้น
 
-ขอบคุณสำหรับปีที่แล้ว  
-ขอบคุณที่ยังอยู่  
-และยังเดินมาถึงตรงนี้ด้วยกัน  
+ขอบคุณสำหรับปีที่แล้ว
+ขอบคุณที่ยังอยู่
+และยังเดินมาถึงตรงนี้ด้วยกัน
 
-จากนี้ไป…  
-ขอให้ปีใหม่ค่อย ๆ ใจดีกับเรา  
+จากนี้ไป…
+ขอให้ปีใหม่ค่อย ๆ ใจดีกับเรา
 และหวังว่าเราจะดูแลกันได้ดีขึ้นกว่าเดิม
 `;
 
-        const typingEl = document.getElementById("typing");
+        const box = document.getElementById("message");
         const btn = document.getElementById("backBtn");
+
         let i = 0;
+        const speed = 40; // ปรับความเร็วพิมพ์ (ms)
 
         function typeText() {
             if (i < text.length) {
-                typingEl.textContent += text.charAt(i);
-                typingEl.scrollTop = typingEl.scrollHeight; // auto-scroll
+                box.textContent += text.charAt(i);
+                box.scrollTop = box.scrollHeight; // auto scroll
                 i++;
-                setTimeout(typeText, 40);
+                setTimeout(typeText, speed);
             } else {
                 btn.classList.add("active");
             }
