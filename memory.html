@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Happy New Year</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100svh;
+            font-family: 'Mali', cursive;
+            background: linear-gradient(135deg,
+                    #FFAFCC,
+                    #BDE0FE,
+                    #CDB4F5,
+                    #FFC8DD);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #5a3a6e;
+            /* ✅ สีข้อความทั้งหน้า */
+        }
+
+        /* ===== Phone Frame ===== */
+        .phone {
+            width: 380px;
+            height: 720px;
+            border-radius: 36px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* ===== PNG Overlay ===== */
+        .overlay-img {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            pointer-events: none;
+            opacity: 0.35;
+        }
+
+        .phone>*:not(.overlay-img) {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #5a3a6e;
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        /* ===== Content ===== */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 6px 2px;
+        }
+
+        /* ===== Intro Text ===== */
+        .intro {
+            font-size: 14px;
+            line-height: 1.7;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        /* ===== Memory Card ===== */
+        .memory {
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 20px;
+            padding: 14px 16px;
+            font-size: 14.5px;
+            line-height: 1.7;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            animation: fadeUp 0.5s ease forwards;
+            color: #5a3a6e;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Memory Image ===== */
+        .memory-img {
+            width: 100%;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            object-fit: cover;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+            opacity: 0.95;
+            filter: saturate(0.95);
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            margin-top: 8px;
+        }
+
+        /* ===== ปุ่มใหม่เป็น a ===== */
+        .next-btn {
+            display: block;
+            width: 100%;
+            padding: 13px 0;
+            border-radius: 999px;
+            text-align: center;
+            text-decoration: none;
+
+            font-family: 'Mali', cursive;
+            font-size: 14px;
+            font-weight: 600;
+
+            color: #5a3a6e;
+            background: linear-gradient(135deg,
+                    #FFAFCC,
+                    #FFC8DD,
+                    #BDE0FE);
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .next-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ===== Scrollbar ===== */
+        .content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: rgba(255, 182, 193, 0.45);
+            border-radius: 999px;
+        }
+
+        .content {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 182, 193, 0.5) transparent;
+        }
+
+        /* ===== Reduce Motion ===== */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="phone">
+
+        <img src="img/back.png" class="overlay-img">
+
+        <div class="header">
+            <h2>ความทรงจำปี 2025</h2>
+            <p>บางอย่างยังอยู่ แม้เวลาจะผ่านไป</p>
+        </div>
+
+        <div class="content">
+
+            <div class="memory">
+                <img src="img/p3.jpg" class="memory-img">
+                มีวันที่เราไม่ได้ทำอะไรพิเศษ<br>
+                แค่นั่งคุยกันเรื่องเดิม ๆ<br>
+                แต่กลับรู้สึกสบายใจอย่างแปลก
+            </div>
+
+            <div class="memory">
+                <img src="img/p2.jpg" class="memory-img">
+                มีช่วงที่เราเหนื่อย<br>
+                และมีช่วงที่เธอเองก็คงเหนื่อยเหมือนกันแต่เรายังเลือกจะอยู่ตรงนี้
+            </div>
+
+            <div class="memory">
+                <img src="img/p1.jpg" class="memory-img">
+                บางครั้งเราอาจไม่ได้พูดกันเยอะ<br>
+                แต่ความเงียบนั้นไม่ได้น่าอึดอัด<br>
+                กลับเป็นความเงียบที่อบอุ่น
+            </div>
+
+            <div class="footer">
+                <a href="goal.html" class="next-btn">
+                    ตั้งเป้าหมายปีใหม่
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

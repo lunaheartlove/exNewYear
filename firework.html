@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Happy New Year</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100svh;
+            font-family: 'Mali', cursive;
+            background: linear-gradient(135deg,
+                    #FFAFCC,
+                    #BDE0FE,
+                    #CDB4F5,
+                    #FFC8DD);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ===== Phone Frame ===== */
+        .phone {
+            width: 380px;
+            height: 720px;
+            border-radius: 36px;
+            background: #111;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ===== Scene ===== */
+        .scene {
+            position: absolute;
+            inset: 0;
+            background: rgba(26, 26, 46, 0.9);
+            z-index: 0;
+        }
+
+        /* ===== Night Overlay ===== */
+        .night {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at bottom,
+                    rgba(26, 26, 46, 0.85),
+                    rgba(0, 0, 0, 0.95));
+            opacity: 0;
+            animation: fadeToNight 6s ease forwards;
+            z-index: 1;
+        }
+
+        @keyframes fadeToNight {
+            0% {
+                opacity: 0;
+            }
+
+            40% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 0.7;
+            }
+        }
+
+        /* ===== Greeting Text ===== */
+        .greeting {
+            position: absolute;
+            top: 18%;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            z-index: 4;
+            pointer-events: none;
+            animation: fadeUp 2s ease forwards;
+        }
+
+        .greeting h1 {
+            font-size: 34px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow:
+                0 0 12px rgba(255, 255, 255, 0.6),
+                0 0 30px rgba(255, 182, 193, 0.4);
+        }
+
+        .greeting p {
+            margin-top: 10px;
+            font-size: 16px;
+            opacity: 0.85;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Couple ===== */
+        .couple {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            z-index: 6;
+            pointer-events: none;
+            filter: drop-shadow(0 -10px 25px rgba(255, 255, 255, 0.15));
+        }
+
+        /* ===== Firework Particle ===== */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: particleMove 1.8s ease-out forwards;
+            box-shadow:
+                0 0 10px currentColor,
+                0 0 26px currentColor,
+                0 0 52px currentColor;
+            mix-blend-mode: screen;
+            z-index: 3;
+        }
+
+        @keyframes particleMove {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--x), var(--y)) scale(0.2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="phone">
+
+        <div class="scene"></div>
+        <div class="night"></div>
+
+
+    </div>
+
+    <script>
+        const colors = [
+            "#ff4fd8",
+            "#ffe84a",
+            "#4dfff3",
+            "#9b5cff",
+            "#ff9f1c",
+            "#7cff6b",
+            "#ffffff"
+        ];
+
+        const phone = document.querySelector(".phone");
+
+        setTimeout(() => {
+            startFireworks();
+        }, 4200);
+
+        function startFireworks() {
+            setInterval(() => {
+                const bursts = 4 + Math.floor(Math.random() * 3);
+                for (let i = 0; i < bursts; i++) {
+                    setTimeout(launchFirework, i * 150);
+                }
+            }, 650);
+        }
+
+        function launchFirework() {
+            const rect = phone.getBoundingClientRect();
+            const x = Math.random() * rect.width;
+            const y = Math.random() * rect.height * 0.6 + rect.height * 0.15;
+            explode(x, y);
+        }
+
+        function explode(x, y) {
+            const baseColor = colors[Math.floor(Math.random() * colors.length)];
+            createRing(x, y, 30, 110, baseColor);
+            setTimeout(() => createRing(x, y, 22, 70, lightenColor(baseColor)), 140);
+            setTimeout(() => createRing(x, y, 14, 40, "#ffffff"), 280);
+        }
+
+        function createRing(x, y, count, radius, color) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement("div");
+                particle.className = "particle";
+                particle.style.background = color;
+
+                const angle = (Math.PI * 2 / count) * i;
+                const distance = Math.random() * radius * 0.5 + radius * 0.5;
+
+                particle.style.left = x + "px";
+                particle.style.top = y + "px";
+                particle.style.setProperty("--x", Math.cos(angle) * distance + "px");
+                particle.style.setProperty("--y", Math.sin(angle) * distance + "px");
+
+                phone.appendChild(particle);
+                setTimeout(() => particle.remove(), 1800);
+            }
+        }
+
+        function lightenColor(color) {
+            if (color === "#ffffff") return color;
+            let num = parseInt(color.slice(1), 16);
+            let r = Math.min(255, (num >> 16) + 50);
+            let g = Math.min(255, ((num >> 8) & 255) + 50);
+            let b = Math.min(255, (num & 255) + 50);
+            return "#" + (r << 16 | g << 8 | b).toString(16).padStart(6, "0");
+        }
+    </script>
+
+</body>
+
+</html>
